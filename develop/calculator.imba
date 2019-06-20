@@ -7,11 +7,14 @@ export tag Calculator < form
 	def setup
 		@calculator = Calc.new
 
+	def mount
+		querySelector('input').focus
+
 	def normalise
 		render @expression.value = @expression.value.replace(/\s+/g, ' ')
 
 	def testingExpression
-		@pattern = false
+		@calculate = @pattern = false
 		normalise if @expression.value.replace(/\s+/g, '') then @pattern = @calculator.syntax( @expression.value.replace(/×/g, '*').replace(/÷/g, '/') ) ? '.*' : '^ $'
 
 	def insertCode code
@@ -20,10 +23,14 @@ export tag Calculator < form
 	def deleteCode
 		normalise @expression.value = @expression.value.replace(/\s*\S\s*$/,'')
 
+	def calculateExpression
+		let norm = @expression.value.replace(/×/g, '*').replace(/÷/g, '/')
+		if @calculator.syntax norm then render @calculate = !!@expression.value = @calculator.calculate norm
+
 	def render
-		<self#Calculator>
+		<self#Calculator :submit.prevent.calculateExpression >
 			<label>
-				<input@expression type="text" :input.testingExpression pattern=@pattern
+				<input@expression .calculate=@calculate type="text" :input.testingExpression pattern=@pattern
 					required=(!!@expression.value.replace(/\s+/g, ''))>
 			<blockquote>
 				for item, index in Array(10)
