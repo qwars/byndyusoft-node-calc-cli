@@ -13,9 +13,12 @@ export tag Calculator < form
 	def normalise
 		render @expression.value = @expression.value.replace(/\s+/g, ' ')
 
+	def norm
+		@expression.value.replace(/×/g, '*').replace(/÷/g, '/')
+
 	def testingExpression
 		@calculate = @pattern = false
-		normalise if @expression.value.replace(/\s+/g, '') then @pattern = @calculator.syntax( @expression.value.replace(/×/g, '*').replace(/÷/g, '/') ) ? '.*' : '^ $'
+		normalise if @expression.value.replace(/\s+/g, '') then @pattern = @calculator.syntax( norm ) ? '.*' : '^ $'
 
 	def insertCode code
 		normalise @expression.value += code
@@ -24,7 +27,6 @@ export tag Calculator < form
 		normalise @expression.value = @expression.value.replace(/\s*\S\s*$/,'')
 
 	def calculateExpression
-		let norm = @expression.value.replace(/×/g, '*').replace(/÷/g, '/')
 		if @calculator.syntax norm then render @calculate = !!@expression.value = @calculator.calculate norm
 
 	def render
@@ -44,4 +46,4 @@ export tag Calculator < form
 				<span html="&#215;" :tap.insertCode(' × ')>
 				<span html="&#247;" :tap.insertCode(' ÷ ')>
 				<span html="&#9003;" :tap.deleteCode>
-				<span> '='
+				<span :tap.calculateExpression> '='

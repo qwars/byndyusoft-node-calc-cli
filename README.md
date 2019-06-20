@@ -28,3 +28,9 @@
 
 Для настройки: ```npm i```
 
+
+Разработка для WEB: ```npm run develop:web```
+Разработка для CLI: ```npm run develop:cli```
+
+## Использование
+
