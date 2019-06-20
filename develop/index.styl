@@ -1,0 +1,58 @@
+@import url( 'https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&subset=cyrillic' )
+
+dfn, u, caption, a, del, i, var, samp, code, s, ins
+	font: normal normal 400 normal 14px / normal Montserrat-Regular, Montserrat
+	text-decoration: none
+
+a, del
+	color: rgb(4,201,255)
+	text-decoration: none
+	cursor: pointer
+
+a:hover
+	color: rgb(129, 143, 205);
+
+i
+	position: relative
+	&:after
+		content: ""
+		position: absolute
+		top: 0px
+		right: 0px
+		bottom: 0px
+		left: 0px
+		margin: auto
+		z-index: 1
+
+html
+	min-height: 100%
+	margin: 0px
+	padding: 0px
+	height: 100%
+
+body
+	display: grid
+	grid-template-columns: 1fr
+	grid-template-rows: auto 1fr auto
+	min-height: 100%
+	margin: 0px
+	padding: 0px
+	height: 100%
+	font: normal normal 400 normal 14px / normal Montserrat-Regular, Montserrat
+	-webkit-font-smoothing: antialiased
+	text-rendering: optimizeLegibility
+	color: rgb(64, 64, 64)
+	background-color: rgb(27, 34, 67)
+	:focus
+		box-shadow: none
+		outline: 0px solid transparent
+
+
+footer
+	position: fixed
+	right: 40px
+	bottom: 40px
+	margin: auto
+	display: flex
+	align-items: center
+	justify-content: center

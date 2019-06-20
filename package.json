@@ -1,0 +1,42 @@
+{
+    "name": "byndyusoft-node-calc-cli",
+    "version": "1.0.0",
+    "description": "Test task for byndyusoft.com",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "develop:web": "webpack-dev-server --port 9090 --mode development -d --devtool source-map --inline --content-base .public/",
+        "build:web": "webpack --mode production --bail -p --display errors-only"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/qwars/byndyusoft-node-calc-cli.git"
+    },
+    "keywords": [
+        "calculator"
+    ],
+    "author": "Alexander Selunin <aka.qwars@gmail.com>",
+    "bugs": {
+        "url": "https://github.com/qwars/byndyusoft-node-calc-cli/issues"
+    },
+    "homepage": "https://github.com/qwars/byndyusoft-node-calc-cli#readme",
+    "dependencies": {
+        "imba": "^1.4.2"
+    },
+    "devDependencies": {
+        "autoprefixer": "^9.6.0",
+        "copy-webpack-plugin": "^5.0.3",
+        "css-loader": "^3.0.0",
+        "cssnano": "^4.1.10",
+        "html-webpack-plugin": "^3.2.0",
+        "mini-css-extract-plugin": "^0.7.0",
+        "optimize-css-assets-webpack-plugin": "^5.0.1",
+        "postcss-loader": "^3.0.0",
+        "style-loader": "^0.23.1",
+        "stylus": "^0.54.5",
+        "stylus-loader": "^3.0.2",
+        "webpack": "^4.34.0",
+        "webpack-cli": "^3.3.4",
+        "webpack-dev-server": "^3.7.2"
+    }
+}

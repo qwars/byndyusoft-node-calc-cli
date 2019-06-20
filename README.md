@@ -19,3 +19,12 @@
 > Best wishes,
 > Margarita Milberger
 > HR-manager at Byndyusoft http://byndyusoft.com
+
+## Установка и настройка
+
+Для установки понадобиться:
+
+[nodejs](https://nodejs.org/ "nodejs") ```$ sudo apt install nodejs```
+
+Для настройки: ```npm i```
+
