@@ -1,5 +1,7 @@
 @import url( 'https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&subset=cyrillic' )
 
+@import url('https://use.fontawesome.com/releases/v5.8.1/css/all.css')
+
 dfn, u, caption, a, del, i, var, samp, code, s, ins
 	font: normal normal 400 normal 14px / normal Montserrat-Regular, Montserrat
 	text-decoration: none
@@ -47,7 +49,34 @@ body
 		box-shadow: none
 		outline: 0px solid transparent
 
+header
+	box-sizing: border-box
+	display: grid
+	grid-template-rows: 72px
+	grid-template-columns: auto 1fr auto
+	grid-column-gap: 16px
+	background-color: rgb(40, 49, 90)
 
+	& > *
+		align-self: stretch;
+		display: flex;
+		align-items: center;
+
+	& > a
+		justify-content: center; width: 132px
+		& i 
+			font-size: 24px
+			margin: 0px .3ex
+			&:first-child 
+				font-weight: bold
+				font-size: 42px
+				color: white
+				margin: 0px .1ex
+				& ~ i 
+					transform: translateY(12px)
+			&:last-child 
+				font-size: 16px
+				margin: -48px 0px 0px -32px
 footer
 	position: fixed
 	right: 40px
