@@ -41,6 +41,11 @@ describe('Calculator Tests', function() {
 	done();
     });
     
+    it('returns calculate 2.4 / 2 = 1.2', function(done) {
+	assert.equal(Calculator.calculate(' 2.4 / 2 '), 1.2);
+	done();
+    });
+    
     it('returns error ( ( ( 2 / 2 ) + 2 - 2 * 2 ) + 1  / 2 = 0', function(done) {
 	assert.equal(Calculator.calculate('( ( ( 2 / 2 ) + 2 - 2 * 2 ) + 1 / 2'), 0 );
 	done();

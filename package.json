@@ -32,7 +32,8 @@
         ],
         "verbose": true,
         "watch": [
-            "source"
+            "source",
+            "source/test.js"
         ],
         "env": {
             "NODE_ENV": "development"
