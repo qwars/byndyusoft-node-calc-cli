@@ -17,11 +17,12 @@ export default class Calculator
 		let simbol = do |s| exp.match(s) || []
 		!exp.replace(/(e-\d+)|[0-9\.\,\+-]|[*]|[(]|\/|[)]|\s/g,'') &&
 			!exp.match(/\(\s*(\/|\*)/) && !exp.match(/(e|\/|\*|-|\+)\s*\)/) &&
-				simbol(/[)]/g):length == simbol(/[(]/g):length
+				!exp.replace(/\s+/g, '').match(/(e|\/|\*|-|\+|\.){2}/g) &&
+					simbol(/[)]/g):length == simbol(/[(]/g):length
 
 	def calculate exp
 		if syntax( exp ) then Function.new( "return { exp.replace /,/g, '.' }" )()
-		else false
+		else null
 
 	def initialize exp
 
