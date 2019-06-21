@@ -55,6 +55,17 @@ const Calculator = require(  './modules/node-calculator-cli' ).default;
 var result = Calculator('.....');
 ```
 
+или
+
+```
+const Calc = require(  './modules/node-calculator-cli' ).default;
+
+const Calculator = new Calc()
+
+var result = Calculator.calculate('.....');
+```
+
+
 ## Методы
 
 `calculate( exp )` - вычисляет выражение `exp`
