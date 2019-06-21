@@ -4,40 +4,62 @@ import default as Calc from '../source/calculator.imba'
 
 export tag Calculator < form
 
+	prop selectionStart
+	prop selectionEnd
+	prop expressionSplitted
+
 	def setup
 		@calculator = Calc.new
 
 	def mount
 		querySelector('input').focus
-
-	def normalise
-		render @expression.value = @expression.value.replace(/\s+/g, ' ')
+		@expressionSplitted = Array @selectionEnd = @selectionStart = 0
 
 	def norm
 		@expression.value.replace(/×/g, '*').replace(/÷/g, '/')
 
 	def testingExpression
 		@calculate = @pattern = false
-		normalise if @expression.value.replace(/\s+/g, '') then @pattern = @calculator.syntax( norm ) ? '.*' : '^ $'
+		@expressionSplitted = @expression.value.split ''
+		render if @expression.value.replace(/\s+/g, '') then @pattern = @calculator.syntax( norm ) ? '.*' : '^ $'
+
+	def selectionInput
+		@selectionEnd = @expression.dom:selectionEnd
+		@selectionStart = @expression.dom:selectionStart
 
 	def insertCode code
-		normalise @expression.value += code
+		@expressionSplitted.splice @selectionStart, 0, code
+		@expression.value = @expressionSplitted.join ''
+		@selectionEnd = @selectionStart += code:length
+		@expression.focus
+		testingExpression @expression.dom.setSelectionRange @selectionStart, @selectionEnd
 
 	def deleteCode
-		normalise @expression.value = @expression.value.replace(/\s*\S\s*$/,'')
+		if @selectionEnd
+			console.log @selectionEnd - @selectionStart
+			@expressionSplitted.splice @selectionStart - 1, 1
+			@expression.value = @expressionSplitted.join ''
+			@selectionEnd = @selectionStart -= 1
+			@expression.focus
+			testingExpression @expression.dom.setSelectionRange @selectionStart, @selectionEnd
 
 	def calculateExpression
-		if @calculator.syntax norm then render @calculate = !!@expression.value = @calculator.calculate norm
+		if @calculator.syntax norm
+			@calculate = !!@expression.value = @calculator.calculate norm
+			@expressionSplitted = @expression.value.split ''
+			@selectionStart = @selectionEnd = @expressionSplitted:length
 
 	def render
-		<self#Calculator :submit.prevent.calculateExpression >
-			<label>
-				<input@expression .calculate=@calculate type="text" :input.testingExpression pattern=@pattern
-					required=(!!@expression.value.replace(/\s+/g, ''))>
+		<self#Calculator :submit.prevent.calculateExpression > <label>
+			<input@expression .calculate=@calculate type="text"
+				:keyup.selectionInput
+				:mouseup.selectionInput
+				:input.testingExpression pattern=@pattern
+				required=(!!@expression.value.replace(/\s+/g, ''))>
 			<blockquote>
 				for item, index in Array(10)
-					<var :tap.insertCode(index)> index if index
-				<var :tap.insertCode(0)> 0
+					<var :tap.insertCode(index.toString)> index if index
+				<var :tap.insertCode('0')> 0
 				<var :tap.insertCode('.')> '.'
 				<var :tap.insertCode(' ( ')> '('
 				<var :tap.insertCode(' ) ')> ')'
