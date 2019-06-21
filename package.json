@@ -4,11 +4,11 @@
     "description": "Test task for byndyusoft.com",
     "main": "index.js",
     "scripts": {
-        "test": "nodemon",
+        "test": "imbac source/calculator.imba && mocha source/test.js",
         "build:web": "webpack --mode production --bail -p --display errors-only",
         "develop:web": "webpack-dev-server --port 9090 --mode development -d --devtool source-map --inline --content-base .public/",
         "build:cli": "mkdir -p modules/node-calculator-cli && imbac -p source/calculator.imba | minify --mangle.keepClassName --deadcode.keepFnArgs --outFile modules/node-calculator-cli/index.js",
-        "develop:cli": "imbac source/calculator.imba"
+        "develop:cli": "nodemon"
     },
     "repository": {
         "type": "git",
@@ -24,7 +24,7 @@
     "homepage": "https://github.com/qwars/byndyusoft-node-calc-cli#readme",
     "nodemonConfig": {
         "restartable": "rs",
-        "exec": "imbac source/calculator.imba && mocha source/test.js",
+        "exec": "imbac source/calculator.imba && node index.js",
         "ignore": [
             ".git",
             "node_modules/**/node_modules",
@@ -33,7 +33,7 @@
         "verbose": true,
         "watch": [
             "source",
-            "source/test.js"
+            "index.js"
         ],
         "env": {
             "NODE_ENV": "development"

@@ -22,12 +22,12 @@ Calculator.prototype.divide = function (a,b){
 
 Calculator.prototype.syntax = function (exp){
 	let simbol = function(s) { return exp.match(s) || []; };
-	return !exp.replace(/(e-\d+)|[0-9\.\,\+-]|[*]|[(]|\/|[)]|\s/g,'') && !exp.match(/\(\s*(\/|\*)/) && !exp.match(/(e|\/|\*|-|\+)\s*\)/) && simbol(/[)]/g).length == simbol(/[(]/g).length;
+	return !exp.replace(/(e-\d+)|[0-9\.\,\+-]|[*]|[(]|\/|[)]|\s/g,'') && !exp.match(/\(\s*(\/|\*)/) && !exp.match(/(e|\/|\*|-|\+)\s*\)/) && !exp.replace(/\s+/g,'').match(/(e|\/|\*|-|\+|\.){2}/g) && simbol(/[)]/g).length == simbol(/[(]/g).length;
 };
 
 Calculator.prototype.calculate = function (exp){
 	if (this.syntax(exp)) { return new Function(("return " + exp.replace(/,/g,'.')))() } else {
-		return false;
+		return null;
 	};
 };
 

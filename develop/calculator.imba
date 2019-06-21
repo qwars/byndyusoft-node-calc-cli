@@ -45,7 +45,7 @@ export tag Calculator < form
 
 	def calculateExpression
 		if @calculator.syntax norm
-			@calculate = !!@expression.value = @calculator.calculate norm
+			render @calculate = !!@expression.value = @calculator.calculate norm
 			@expressionSplitted = @expression.value.split ''
 			@selectionStart = @selectionEnd = @expressionSplitted:length
 
