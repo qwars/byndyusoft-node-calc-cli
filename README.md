@@ -29,8 +29,40 @@
 Для настройки: ```npm i```
 
 
+Разработка тесты: ```npm run test```
+Публикация для WEB: ```npm run build:web``` - создает мини сайт в 'byndyusoft-node-calc-cli'
+Публикация для CLI: ```npm run build:cli``` - создает сжатый 'modules/byndyusoft-node-calc-cli/index.js'
+
 Разработка для WEB: ```npm run develop:web```
 Разработка для CLI: ```npm run develop:cli```
 
 ## Использование
 
+```
+const Calculator = ( fn => new fn() )( require(  './modules/node-calculator-cli' ).default );
+
+var result = Calculator.calculate('.....');
+
+```
+
+или
+
+```
+const Calculator = require(  './modules/node-calculator-cli' ).default;
+
+var result = Calculator('.....');
+```
+
+## Методы
+
+`calculate( exp )` - вычисляет выражение `exp`
+
+`syntax( exp )` - проверяет синтаксис  выражения `exp`
+
+`divide( a, b )` - a / b
+
+`sum( a, b )` - a + b
+
+`subtract( a, b )` - a - b
+
+`multiply( a, b )` - a * b

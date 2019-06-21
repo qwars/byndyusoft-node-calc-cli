@@ -1,6 +1,6 @@
 import './calculator.styl'
 
-import default as Calc from '../source/calculator.imba'
+import default as Calc from '../modules/node-calculator-cli'
 
 export tag Calculator < form
 

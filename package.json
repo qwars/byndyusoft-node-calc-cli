@@ -24,7 +24,7 @@
     "homepage": "https://github.com/qwars/byndyusoft-node-calc-cli#readme",
     "nodemonConfig": {
         "restartable": "rs",
-        "exec": "imbac source/calculator.imba && node index.js",
+        "exec": "node index.js",
         "ignore": [
             ".git",
             "node_modules/**/node_modules",

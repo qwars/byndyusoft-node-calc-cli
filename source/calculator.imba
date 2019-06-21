@@ -2,16 +2,16 @@
 export default class Calculator
 
 	def sum a, b
-		a + b
+		if a isa Number and b isa Number then a + b
 
 	def subtract a, b
-		a - b
+		if a isa Number and b isa Number then a - b
 
 	def multiply a, b
-		a * b
+		if a isa Number and b isa Number then a * b
 
 	def divide a, b
-		a / b
+		if a isa Number and b isa Number then a / b
 
 	def syntax exp
 		let simbol = do |s| exp.match(s) || []
