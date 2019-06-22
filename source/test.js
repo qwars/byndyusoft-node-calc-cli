@@ -1,7 +1,7 @@
 
 var assert = require( "assert" );
 
-var Calculator = ( module => new  module.default() )( require('./calculator.js') );
+var Calculator = ( fn => new  fn() )( require('./calculator.js').default );
 
 describe('Calculator Tests', function() {
 
@@ -47,7 +47,7 @@ describe('Calculator Tests', function() {
     });
     
     it('returns error ( ( ( 2 / 2 ) + 2 - 2 * 2 ) + 1  / 2 = 0', function(done) {
-	assert.equal(Calculator.calculate('( ( ( 2 / 2 ) + 2 - 2 * 2 ) + 1 / 2'), 0 );
+	assert.equal(Calculator.calculate('( ( ( 2 / 2 ) + 2 - 2 * 2 ) + 1 / 2'), null );
 	done();
     });
 

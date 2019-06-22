@@ -5,19 +5,19 @@ function Calculator(exp){
 };
 exports.default = Calculator; // export class 
 Calculator.prototype.sum = function (a,b){
-	return a + b;
+	if ((typeof a=='number'||a instanceof Number) && (typeof b=='number'||b instanceof Number)) { return a + b };
 };
 
 Calculator.prototype.subtract = function (a,b){
-	return a - b;
+	if ((typeof a=='number'||a instanceof Number) && (typeof b=='number'||b instanceof Number)) { return a - b };
 };
 
 Calculator.prototype.multiply = function (a,b){
-	return a * b;
+	if ((typeof a=='number'||a instanceof Number) && (typeof b=='number'||b instanceof Number)) { return a * b };
 };
 
 Calculator.prototype.divide = function (a,b){
-	return a / b;
+	if ((typeof a=='number'||a instanceof Number) && (typeof b=='number'||b instanceof Number)) { return a / b };
 };
 
 Calculator.prototype.syntax = function (exp){
