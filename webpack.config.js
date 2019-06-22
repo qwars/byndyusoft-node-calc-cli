@@ -109,7 +109,7 @@ module.exports = {
     },
     entry: "./index.imba",
     output: {
-        path: __dirname + "/.public",
+        path: __dirname + "/public",
         filename: "javascripts/application.js"
     }
 }

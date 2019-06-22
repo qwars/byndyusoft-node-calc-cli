@@ -30,9 +30,9 @@
 
 Разработка тесты: ```npm run test```
 
-Публикация для WEB: ```npm run build:web``` - создает мини сайт в 'byndyusoft-node-calc-cli'
+Публикация для WEB: ```npm run build:web``` - создает мини сайт в 'public'
 
-Публикация для CLI: ```npm run build:cli``` - создает сжатый 'modules/byndyusoft-node-calc-cli/index.js'
+Публикация для CLI: ```npm run build:cli``` - создает сжатый 'modules/node-calculator-cli/index.js'
 
 Разработка для WEB: ```npm run develop:web```
 
