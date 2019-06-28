@@ -51,9 +51,26 @@ describe('Calculator Tests', function() {
 	done();
     });
 
-    it('returns calculation ( ( ( 2 / 2 ) + 2 - 2 * 2 / 3 * 5 ) + 1  / 2 = 0', function(done) {
-	assert.ok( Calculator.calculation('( ( ( 2 / 2 ) + 2 -  2 * 2 / 3 * 5 ) + 1  / 2'));
+    it('returns calculation ( ( ( ( 2 / 2 ) + 2 - 2 * 2 / 3 * 5 ) + 1  / 2 ) * 0', function(done) {
+	assert.equal( Calculator.calculation('( ( ( ( 2 / 2 ) + 2 -  2 * 2 / 3 * 5 ) + 1  / 2 ) * 0'), 0 );
 	done();
     });
 
+    it('returns calculation ( ( 2 / 2 ) + 2 - 5 * 1 ) = -2', function(done) {
+	assert.equal( Calculator.calculation('( ( 2 / 2 ) + 2 - 5 * 1 )'), -2 );
+	done();
+    });
+    
+    it('returns calculation ( ( 2 / 2 ) + 2 - 5 * 10 ) = -47', function(done) {
+	assert.equal( Calculator.calculation('( ( 2 / 2 ) + 2 - 5 * 10 )'), -47 );
+	done();
+    });
+
+    it('returns calculation ( ( 2 / 2 ) + 2 + 5 * 10 ) = 53', function(done) {
+	assert.equal( Calculator.calculation('( ( 2 / 2 ) + 2 + 5 * 10 )'), 53 );
+	done();
+    });
+
+    
+    
 });

@@ -1,3 +1,4 @@
+function iter$(a){ return a ? (a.toArray ? a.toArray() : a) : []; };
 
 function Calculator(exp){
 	
@@ -24,26 +25,22 @@ Calculator.prototype.calculation = function (exp){ // вычисление с р
 	var self = this;
 	let signs = ['/','*','+','-'];
 	let outcome = function(sign) {
-		var res = [];while (!new RegExp('^-*\\s*\\d+((e|\\.)\\d+)*$').test(exp) && new RegExp(("\\" + sign)).test(exp)){
-			res.push((exp = exp.replace(new RegExp("\\((\\s*\\d+((e|\\.)\\d+)*\\s*)\\)",'g'),'$1').replace(new RegExp(("\\s*\\d+((e|\\.)\\d+)*\\s*\\" + sign + "\\s*\\d+((e|\\.)\\d+)*\\s*")),function(sets) {
-				let numbers = sets.split(sign).map(function(n) { return Number(n); });
-				if (sign == '/') { return self.divide(numbers[0],numbers[1]) } else if (sign == '*') { return self.multiply(numbers[0],numbers[1]) } else if (sign == '+') { return self.sum(numbers[0],numbers[1]) } else {
-					return self.subtract(numbers[0],numbers[1]);
-				};
-			})));
-		};return res;
+		return exp = exp.replace(new RegExp("\\((\\s*\\d+((e|\\.)\\d+)*\\s*)\\)",'g'),'$1').replace(new RegExp(("\\s*\\d+((e|\\.)\\d+)*\\s*\\" + sign + "\\s*\\d+((e|\\.)\\d+)*\\s*")),function(sets) {
+			let numbers = sets.split(sign).map(function(n) { return Number(n); });
+			if (sign == '/') { return self.divide(numbers[0],numbers[1]) } else if (sign == '*') { return self.multiply(numbers[0],numbers[1]) } else if (sign == '+') { return self.sum(numbers[0],numbers[1]) } else {
+				return self.subtract(numbers[0],numbers[1]);
+			};
+		});
 	};
-	
-	let res = [];
-	for (let i = 0, len = signs.length, sign; i < len; i++) {
-		sign = signs[i];
-		if (!sign.includes('*') && !sign.includes('/')) { exp = exp.replace(new RegExp("\\(|\\)",'g'),' ') };
-		if (i && sign.includes(signs[i - 1])) { outcome(signs[i - 1]) };
-		res.push(outcome(sign));
+	while (!new RegExp("^\\s*-*\\s*\\d+((e|\\.)\\d+)*\\s*$").test(exp) && signs.filter(function(sg) { return exp.includes(sg); }).length > 0){
+		for (let i = 0, items = iter$(signs.filter(function(sg) { return exp.includes(sg); })), len = items.length, sign; i < len; i++) {
+			sign = items[i];
+			if (!sign.includes('*') && !sign.includes('/')) { exp = exp.replace(new RegExp("\\(|\\)",'g'),' ') };
+			outcome(sign);
+		};
 	};
-	return res;
+	return Number(exp.trim()) + 0;
 };
-
 
 Calculator.prototype.syntax = function (exp){
 	let simbol = function(s) { return exp.match(s) || []; };

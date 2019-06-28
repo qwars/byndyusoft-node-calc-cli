@@ -16,20 +16,18 @@ export default class Calculator
 	def calculation exp # вычисление с разбором
 		let signs = ['/','*','+','-']
 		let outcome = do |sign|
-			while not RegExp.new( '^-*\\s*\\d+((e|\\.)\\d+)*$' ).test( exp ) and RegExp.new( "\\{ sign }" ).test( exp )
-				exp = exp.replace( RegExp.new( "\\((\\s*\\d+((e|\\.)\\d+)*\\s*)\\)", 'g'), '$1' )
-					.replace RegExp.new( "\\s*\\d+((e|\\.)\\d+)*\\s*\\{ sign }\\s*\\d+((e|\\.)\\d+)*\\s*"), do |sets|
-						let numbers = sets.split( sign ).map do |n| Number n
-						if sign == '/' then divide numbers[0], numbers[1]
-						else if sign == '*' then multiply numbers[0], numbers[1]
-						else if sign == '+' then sum numbers[0], numbers[1]
-						else subtract numbers[0], numbers[1]
-
-		for sign, i in signs
-			if !sign.includes('*') && !sign.includes('/') then exp = exp.replace(RegExp.new( "\\(|\\)", 'g'), ' ' )
-			if i && sign.includes signs[ i - 1 ] then outcome( signs[ i - 1 ] )
-			outcome( sign )
-
+			exp = exp.replace( RegExp.new( "\\((\\s*\\d+((e|\\.)\\d+)*\\s*)\\)", 'g'), '$1' )
+				.replace RegExp.new( "\\s*\\d+((e|\\.)\\d+)*\\s*\\{ sign }\\s*\\d+((e|\\.)\\d+)*\\s*"), do |sets|
+					let numbers = sets.split( sign ).map do |n| Number n
+					if sign == '/' then divide numbers[0], numbers[1]
+					else if sign == '*' then multiply numbers[0], numbers[1]
+					else if sign == '+' then sum numbers[0], numbers[1]
+					else subtract numbers[0], numbers[1]
+		while not RegExp.new( "^\\s*-*\\s*\\d+((e|\\.)\\d+)*\\s*$" ).test( exp ) and  signs.filter( do |sg| exp.includes sg ):length > 0
+			for sign, i in signs.filter( do |sg| exp.includes sg )
+				if !sign.includes('*') && !sign.includes('/') then exp = exp.replace(RegExp.new( "\\(|\\)", 'g'), ' ' )
+				outcome( sign )
+		Number( exp.trim ) + 0
 
 	def syntax exp
 		let simbol = do |s| exp.match(s) || []
