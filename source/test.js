@@ -71,6 +71,19 @@ describe('Calculator Tests', function() {
 	done();
     });
 
-    
+    it('returns syntax error ( ( 2 / 2 ) + 2 + 5 * 10', function(done) {
+	assert.ok( !Calculator.syntax('( ( 2 / 2 ) + 2 + 5 * 10') );
+	done();
+    });
+
+    it('returns syntax error ( ( 2 / 2 ) + 2 + 5 ** 10 )', function(done) {
+	assert.ok( !Calculator.syntax('( ( 2 / 2 ) + 2 + 5 * 10') );
+	done();
+    });
+
+    it('returns syntax ok ( ( 2 / 2 ) + 2 - 2 * 2 ) + 1  / 2', function(done) {
+	assert.ok(Calculator.syntax('( ( 2 / 2 ) + 2 - 2 * 2 ) + 1 / 2') );
+	done();
+    });
     
 });
