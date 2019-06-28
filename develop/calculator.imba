@@ -49,6 +49,7 @@ export tag Calculator < form
 			@expressionSplitted = @expression.value.split ''
 			@selectionStart = @selectionEnd = @expressionSplitted:length
 
+
 	def render
 		<self#Calculator :submit.prevent.calculateExpression > <label>
 			<input@expression .calculate=@calculate type="text"

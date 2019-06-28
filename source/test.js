@@ -51,4 +51,9 @@ describe('Calculator Tests', function() {
 	done();
     });
 
+    it('returns calculation ( ( ( 2 / 2 ) + 2 - 2 * 2 / 3 * 5 ) + 1  / 2 = 0', function(done) {
+	assert.ok( Calculator.calculation('( ( ( 2 / 2 ) + 2 -  2 * 2 / 3 * 5 ) + 1  / 2'));
+	done();
+    });
+
 });
