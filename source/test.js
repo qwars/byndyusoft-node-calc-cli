@@ -51,8 +51,8 @@ describe('Calculator Tests', function() {
 	done();
     });
 
-    it('returns calculation ( ( ( ( 2 / 2 ) + 2 - 2 * 2 / 3 * 5 ) + 1  / 2 ) * 0', function(done) {
-	assert.equal( Calculator.calculation('( ( ( ( 2 / 2 ) + 2 -  2 * 2 / 3 * 5 ) + 1  / 2 ) * 0'), 0 );
+    it('returns calculation ( ( ( 2 / 2 ) + 2 - 2 * 2 / 3 * 5 ) + 1  / 2 ) * 0', function(done) {
+	assert.equal( Calculator.calculation(' ( ( ( 2 / 2 ) + 2 -  2 * 2 / 3 * 5 ) + 1  / 2 ) * 0'), 0 );
 	done();
     });
 
