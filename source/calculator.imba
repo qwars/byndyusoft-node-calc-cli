@@ -1,3 +1,4 @@
+### Код не принят верховным главнокомандующим, фу регулярные выражения слишком сложны для понимания
 
 let SyntaxExpression = do |exp|
 	let simbol = do |s| exp.match(s) || []
@@ -6,49 +7,50 @@ let SyntaxExpression = do |exp|
 			!exp.replace(/\s+/g, '').match(/(e|\/|\*|-|\+|\.){2}/g) &&
 				simbol(/[)]/g):length == simbol(/[(]/g):length
 
+###
+
+import SyntaxExpression from './syntax-expression'
+
+const MathFunction =
+	multiply: do |a, b| a * b
+	divide: do |a,b| a / b
+	subtract: do |a,b| a - b
+	sum: do |a,b| a + b
+
+
+const MathFunctionMap = Map.new [
+	[ '*', do |calc| MathFunction:multiply( calc[0], calc[2] ) ]
+	[ '/', do |calc| MathFunction:divide( calc[0], calc[2] ) ]
+	[ '-', do |calc| MathFunction:subtract( calc[0], calc[2] ) ]
+	[ '+', do |calc| MathFunction:sum( calc[0], calc[2] ) ]
+]
+
 export default class Calculator
 
-	def sum a, b
-		if a isa Number and b isa Number then a + b
-
-	def subtract a, b
-		if a isa Number and b isa Number then a - b
-
-	def multiply a, b
-		if a isa Number and b isa Number then a * b
-
-	def divide a, b
-		if a isa Number and b isa Number then a / b
-
-	def syntax exp
-		SyntaxExpression exp
-
-	def calculation exp # вычисление с разбором
-		let signs = ['/','*','+','-']
-
-		let outcome = do |sign|
-			exp = exp.replace( RegExp.new( "\\((\\s*\\d+((e|\\.)\\d+)*\\s*)\\)", 'g'), '$1' )
-				.replace RegExp.new( "\\s*\\d+((e|\\.)\\d+)*\\s*\\{ sign }\\s*\\d+((e|\\.)\\d+)*\\s*"), do |sets|
-					let numbers = sets.split( sign ).map do |n| Number n
-					self[ sign ] && self[ sign ]( numbers[0], numbers[1] )
-
-		if not syntax exp then null
-		else
-			while not RegExp.new( "^\\s*-*\\s*\\d+((e|\\.)\\d+)*\\s*$" ).test( exp ) and  signs.filter( do |sg| exp.includes sg ):length > 0
-				for sign, i in signs.filter( do |sg| exp.includes sg )
-					if !sign.includes('*') && !sign.includes('/') then exp = exp.replace(RegExp.new( "\\(|\\)", 'g'), ' ' )
-					outcome( sign )
-
-			Number( exp.trim ) + 0
-
 	def calculate exp
-		if syntax exp then Function.new( "return { exp.replace /,/g, '.' }" )()
-		else null
+		let calculateItem = do |item|
+			if item isa Array then calculate item
+			else item
+
+		let normaliseArray = do |source|
+			source.map do |item, index|
+				if item isa Array and item:length == 1 then item[0]
+				else item
+
+		let calculateOperator =  do |func, operator|
+			this:position = this.includes( operator ) and this.indexOf operator
+			while this:position isa Number
+				this.splice this:position - 1, 3, func [ this[ this:position - 1 ], this[ this:position ], this[ this:position + 1 ] ]
+				this:position = this.includes( operator ) and this.indexOf operator
+
+		if exp isa String then calculate SyntaxExpression exp
+		else if exp isa Number then exp
+		else if exp isa Array
+			exp = normaliseArray exp.map calculateItem
+			Object.defineProperty exp, 'position',
+				writable: true
+				value: null
+			exp[0] unless MathFunctionMap.forEach calculateOperator.bind exp
 
 	def initialize exp
-		self['+'] = self:sum
-		self['-'] = self:subtract
-		self['*'] = self:multiply
-		self['/'] = self:divide
-
 		exp && calculate exp

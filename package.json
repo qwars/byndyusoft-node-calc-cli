@@ -4,12 +4,14 @@
     "description": "Test task for byndyusoft.com",
     "main": "index.js",
     "scripts": {
-        "test": "imbac source/calculator.imba && mocha source/test.js",
-        "code": "imbac source/calculator.imba && cat source/calculator.js",
+        "test": "yarn test:syntax && test:calculator",
+        "start": "node ./index.js",
+        "test:syntax": "yarn code:syntax -o source/syntax-expression.js && mocha source/test-syntax.js",
+        "test:calculator": "yarn code:calculator -o source/calculator.js && mocha source/test-calculator.js",
+        "code:calculator": "imbac -p source/calculator.imba | js-beautify -",
+        "code:syntax": "imbac -p source/syntax-expression.imba | js-beautify -",
         "build:web": "webpack --mode production --bail -p --display errors-only",
-        "develop:web": "npm run build:cli && webpack-dev-server --port 9090 --mode development -d --devtool source-map --inline --content-base public/",
-        "build:cli": "mkdir -p modules/node-calculator-cli && imbac -p source/calculator.imba | minify --mangle.keepClassName --deadcode.keepFnArgs --outFile modules/node-calculator-cli/index.js",
-        "develop:cli": "npm run build:cli && nodemon"
+        "develop:web": "webpack-dev-server --port 9090 --mode development -d --devtool source-map --inline --content-base public/"
     },
     "repository": {
         "type": "git",
@@ -23,6 +25,7 @@
         "url": "https://github.com/qwars/byndyusoft-node-calc-cli/issues"
     },
     "homepage": "https://github.com/qwars/byndyusoft-node-calc-cli#readme",
+    "private": true,
     "nodemonConfig": {
         "restartable": "rs",
         "exec": "node index.js",
@@ -42,13 +45,14 @@
         "ext": "imba json"
     },
     "devDependencies": {
-        "imba": "^1.4.2",
         "autoprefixer": "^9.6.0",
         "babel-minify": "^0.5.0",
         "copy-webpack-plugin": "^5.0.3",
         "css-loader": "^3.0.0",
         "cssnano": "^4.1.10",
         "html-webpack-plugin": "^3.2.0",
+        "imba": "^1.4.2",
+        "js-beautify": "^1.10.2",
         "mini-css-extract-plugin": "^0.7.0",
         "mocha": "^6.1.4",
         "nodemon": "^1.19.1",

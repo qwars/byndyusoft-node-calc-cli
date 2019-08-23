@@ -1,6 +1,8 @@
 import './calculator.styl'
 
-import default as Calc from '../modules/node-calculator-cli'
+import default as Calc from '../source/calculator'
+
+import SyntaxExpression from '../source/syntax-expression'
 
 export tag Calculator < form
 
@@ -21,7 +23,7 @@ export tag Calculator < form
 	def testingExpression
 		@calculate = @pattern = false
 		@expressionSplitted = @expression.value.split ''
-		render if @expression.value.replace(/\s+/g, '') then @pattern = @calculator.syntax( norm ) ? '.*' : '^ $'
+		render if @expression.value.replace(/\s+/g, '') then @pattern = SyntaxExpression( norm ) ? '.*' : '^ $'
 
 	def selectionInput
 		@selectionEnd = @expression.dom:selectionEnd
@@ -44,7 +46,7 @@ export tag Calculator < form
 			testingExpression @expression.dom.setSelectionRange @selectionStart, @selectionEnd
 
 	def calculateExpression
-		if @calculator.syntax norm
+		if SyntaxExpression norm
 			render @calculate = !!@expression.value = @calculator.calculate norm
 			@expressionSplitted = @expression.value.split ''
 			@selectionStart = @selectionEnd = @expressionSplitted:length

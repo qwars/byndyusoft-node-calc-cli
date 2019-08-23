@@ -1,67 +1,96 @@
-function iter$(a){ return a ? (a.toArray ? a.toArray() : a) : []; };
+/* Код не принят верховным главнокомандующим, фу регулярные выражения слишком сложны для понимания
 
-let SyntaxExpression = function(exp) {
-	let simbol = function(s) { return exp.match(s) || []; };
-	return !exp.replace(/(e-\d+)|[0-9\.\,\+-]|[*]|[(]|\/|[)]|\s/g,'') && !exp.match(/\(\s*(\/|\*)/) && !exp.match(/(e|\/|\*|-|\+)\s*\)/) && !exp.replace(/\s+/g,'').match(/(e|\/|\*|-|\+|\.){2}/g) && simbol(/[)]/g).length == simbol(/[(]/g).length;
+let SyntaxExpression = do |exp|
+	let simbol = do |s| exp.match(s) || []
+	!exp.replace(/(e-\d+)|[0-9\.\,\+-]|[*]|[(]|\/|[)]|\s/g,'') &&
+		!exp.match(/\(\s*(\/|\*)/) && !exp.match(/(e|\/|\*|-|\+)\s*\)/) &&
+			!exp.replace(/\s+/g, '').match(/(e|\/|\*|-|\+|\.){2}/g) &&
+				simbol(/[)]/g):length == simbol(/[(]/g):length
+
+*/
+
+
+var SyntaxExpression = require('./syntax-expression').SyntaxExpression;
+
+
+const MathFunction = {
+    multiply: function(a, b) {
+        return a * b;
+    },
+    divide: function(a, b) {
+        return a / b;
+    },
+    subtract: function(a, b) {
+        return a - b;
+    },
+    sum: function(a, b) {
+        return a + b;
+    }
 };
 
-function Calculator(exp){
-	this['+'] = this.sum;
-	this['-'] = this.subtract;
-	this['*'] = this.multiply;
-	this['/'] = this.divide;
-	
-	exp && this.calculate(exp);
+
+const MathFunctionMap = new Map([
+    ['*', function(calc) {
+        return MathFunction.multiply(calc[0], calc[2]);
+    }],
+    ['/', function(calc) {
+        return MathFunction.divide(calc[0], calc[2]);
+    }],
+    ['-', function(calc) {
+        return MathFunction.subtract(calc[0], calc[2]);
+    }],
+    ['+', function(calc) {
+        return MathFunction.sum(calc[0], calc[2]);
+    }]
+]);
+
+function Calculator(exp) {
+    exp && this.calculate(exp);
 };
 exports.default = Calculator; // export class 
-Calculator.prototype.sum = function (a,b){
-	if ((typeof a=='number'||a instanceof Number) && (typeof b=='number'||b instanceof Number)) { return a + b };
+Calculator.prototype.calculate = function(exp) {
+    var self = this;
+    let calculateItem = function(item) {
+        if (item instanceof Array) {
+            return self.calculate(item)
+        } else {
+            return item;
+        };
+    };
+
+    let normaliseArray = function(source) {
+        return source.map(function(item, index) {
+            if ((item instanceof Array) && item.length == 1) {
+                return item[0]
+            } else {
+                return item;
+            };
+        });
+    };
+
+    let calculateOperator = function(func, operator) {
+        this.position = this.includes(operator) && this.indexOf(operator);
+        var res = [],
+            position_;
+        while ((typeof(position_ = this.position) == 'number' || position_ instanceof Number)) {
+            this.splice(this.position - 1, 3, func([this[this.position - 1], this[this.position], this[this.position + 1]]));
+            res.push((this.position = this.includes(operator) && this.indexOf(operator)));
+        };
+        return res;
+    };
+
+    if ((typeof exp == 'string' || exp instanceof String)) {
+        return self.calculate(SyntaxExpression(exp))
+    } else if ((typeof exp == 'number' || exp instanceof Number)) {
+        return exp
+    } else if (exp instanceof Array) {
+        exp = normaliseArray(exp.map(calculateItem));
+        Object.defineProperty(exp, 'position', {
+            writable: true,
+            value: null
+        });
+        if (!MathFunctionMap.forEach(calculateOperator.bind(exp))) {
+            return exp[0]
+        };
+    };
 };
-
-Calculator.prototype.subtract = function (a,b){
-	if ((typeof a=='number'||a instanceof Number) && (typeof b=='number'||b instanceof Number)) { return a - b };
-};
-
-Calculator.prototype.multiply = function (a,b){
-	if ((typeof a=='number'||a instanceof Number) && (typeof b=='number'||b instanceof Number)) { return a * b };
-};
-
-Calculator.prototype.divide = function (a,b){
-	if ((typeof a=='number'||a instanceof Number) && (typeof b=='number'||b instanceof Number)) { return a / b };
-};
-
-Calculator.prototype.syntax = function (exp){
-	return SyntaxExpression(exp);
-};
-
-Calculator.prototype.calculation = function (exp){ // вычисление с разбором
-	var self = this;
-	let signs = ['/','*','+','-'];
-	
-	let outcome = function(sign) {
-		return exp = exp.replace(new RegExp("\\((\\s*\\d+((e|\\.)\\d+)*\\s*)\\)",'g'),'$1').replace(new RegExp(("\\s*\\d+((e|\\.)\\d+)*\\s*\\" + sign + "\\s*\\d+((e|\\.)\\d+)*\\s*")),function(sets) {
-			let numbers = sets.split(sign).map(function(n) { return Number(n); });
-			return self[sign] && self[sign](numbers[0],numbers[1]);
-		});
-	};
-	
-	if (!self.syntax(exp)) { return null } else {
-		while (!new RegExp("^\\s*-*\\s*\\d+((e|\\.)\\d+)*\\s*$").test(exp) && signs.filter(function(sg) { return exp.includes(sg); }).length > 0){
-			for (let i = 0, items = iter$(signs.filter(function(sg) { return exp.includes(sg); })), len = items.length, sign; i < len; i++) {
-				sign = items[i];
-				if (!sign.includes('*') && !sign.includes('/')) { exp = exp.replace(new RegExp("\\(|\\)",'g'),' ') };
-				outcome(sign);
-			};
-		};
-		
-		return Number(exp.trim()) + 0;
-	};
-};
-
-Calculator.prototype.calculate = function (exp){
-	if (this.syntax(exp)) { return new Function(("return " + exp.replace(/,/g,'.')))() } else {
-		return null;
-	};
-};
-
-

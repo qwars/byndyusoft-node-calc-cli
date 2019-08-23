@@ -25,18 +25,19 @@
 Для установки понадобиться:
 
 [nodejs](https://nodejs.org/ "nodejs") ```$ sudo apt install nodejs```
+[yarn](https://yarnpkg.com/ "yarn") ```$ sudo npm i -g yarn```
 
-Для настройки: ```npm i```
+Для настройки: ```yarn install```
 
-Разработка тесты: ```npm run test```
+Разработка тесты: ```yarn test```
 
-Публикация для WEB: ```npm run build:web``` - создает мини сайт в 'public'
+Публикация для WEB: ```yarn build:web``` - создает мини сайт в 'public'
 
-Публикация для CLI: ```npm run build:cli``` - создает сжатый 'modules/node-calculator-cli/index.js'
+Публикация для CLI: ```yarn build:cli``` - создает сжатый 'modules/node-calculator-cli/index.js'
 
-Разработка для WEB: ```npm run develop:web```
+Разработка для WEB: ```yarn develop:web```
 
-Разработка для CLI: ```npm run develop:cli```
+Разработка для CLI: ```yarn develop:cli```
 
 ## Использование
 

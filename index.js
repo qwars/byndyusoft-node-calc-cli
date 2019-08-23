@@ -1,4 +1,6 @@
-const Calculator = ( fn => new fn() )( require(  './modules/node-calculator-cli' ).default );
+const Calculator = ( fn => new fn() )( require(  './source/calculator' ).default );
+
+const SyntaxExpression = require('./source/syntax-expression').SyntaxExpression;
 
 const readline = require("readline");
 
@@ -12,7 +14,7 @@ const rl = readline.createInterface({
 rl.prompt();
 
 rl.on('line', function (line) {
-    if( line && Calculator.syntax( line ) ) console.log('Результат: ', Calculator.calculate(line.trim()) );    
+    if( line && SyntaxExpression( line ) ) console.log('Результат: ', Calculator.calculate(line.trim()) );    
     rl.prompt();
 })
 
