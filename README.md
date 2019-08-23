@@ -31,18 +31,17 @@
 
 Разработка тесты: ```yarn test```
 
-Публикация для WEB: ```yarn build:web``` - создает мини сайт в 'public'
+Консольная версия: ```yarn start```
 
-Публикация для CLI: ```yarn build:cli``` - создает сжатый 'modules/node-calculator-cli/index.js'
+Публикация для WEB: ```yarn build:web``` - создает мини сайт в 'public'
 
 Разработка для WEB: ```yarn develop:web```
 
-Разработка для CLI: ```yarn develop:cli```
 
 ## Использование
 
 ```
-const Calculator = ( fn => new fn() )( require(  './modules/node-calculator-cli' ).default );
+const Calculator = ( fn => new fn() )( require(  './source/calculator' ).default );
 
 var result = Calculator.calculate('.....');
 
@@ -51,7 +50,7 @@ var result = Calculator.calculate('.....');
 или
 
 ```
-const Calculator = require(  './modules/node-calculator-cli' ).default;
+const Calculator = require(  './source/calculator' ).default;
 
 var result = Calculator('.....');
 ```
@@ -59,7 +58,7 @@ var result = Calculator('.....');
 или
 
 ```
-const Calc = require(  './modules/node-calculator-cli' ).default;
+const Calc = require(  './source/calculator' ).default;
 
 const Calculator = new Calc()
 
@@ -70,13 +69,3 @@ var result = Calculator.calculate('.....');
 ## Методы
 
 `calculate( exp )` - вычисляет выражение `exp`
-
-`syntax( exp )` - проверяет синтаксис  выражения `exp`
-
-`divide( a, b )` - a / b
-
-`sum( a, b )` - a + b
-
-`subtract( a, b )` - a - b
-
-`multiply( a, b )` - a * b
