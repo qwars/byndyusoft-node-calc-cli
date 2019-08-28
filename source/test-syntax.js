@@ -29,6 +29,17 @@ describe('Syntax expression Tests', function() {
         assert.ok(SyntaxExpression('2 - 2'));
         done();
     });
+
+    it('returns for 5+-3', function(done) {
+        assert.ok(SyntaxExpression('5+-3'));
+        done();
+    });
+
+    it('returns for 5+(-7)', function(done) {
+        assert.ok(SyntaxExpression('5+(-7)'));
+        done();
+    });
+
     
     it('returns for -2 + 2', function(done) {
         assert.ok(SyntaxExpression('-2 - 2'));
@@ -113,6 +124,5 @@ describe('Syntax expression Tests', function() {
     it('returns for error --1', function(done) {
         assert.ok( SyntaxExpression('2--1') === null );
         done();
-    });
-    
+    });    
 });

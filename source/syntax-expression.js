@@ -67,7 +67,7 @@ exports.SyntaxExpression = self.SyntaxExpression = function(exp) {
     	*/
 
     // Вот даже не знаю, или эту строку нужно по другому написать.
-    if (exp.match(/[^0-9\.\-\+\*\/\)\(e\s]/) || exp.match(/[\-\+\*\/]{2}/) || exp.match(/[e\.]\s+/)) {
+    if (exp.match(/[^0-9\.\-\+\*\/\)\(e\s]/) || exp.match(/\-{2}|\+{2}|\*{2}|\/{2}/) || exp.match(/[e\.]\s+/)) {
         return null
     };
 

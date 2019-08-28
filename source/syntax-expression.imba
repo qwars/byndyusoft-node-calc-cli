@@ -57,7 +57,7 @@ export def SyntaxExpression exp
 
 	###
 	# Вот даже не знаю, или эту строку нужно по другому написать.
-	return null if exp.match( /[^0-9\.\-\+\*\/\)\(e\s]/ ) or exp.match(/[\-\+\*\/]{2}/) or exp.match /[e\.]\s+/
+	return null if exp.match( /[^0-9\.\-\+\*\/\)\(e\s]/ ) or exp.match(/\-{2}|\+{2}|\*{2}|\/{2}/) or exp.match /[e\.]\s+/
 
 	for item in exp.trim.split("") when item.trim !== ''
 		if item == ')' and found:length > 0 then found.push ']'
