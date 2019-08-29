@@ -40,6 +40,10 @@ describe('Syntax expression Tests', function() {
         done();
     });
 
+    it('returns for -5+(-7)', function(done) {
+        assert.ok(SyntaxExpression('-5+(-7)'));
+        done();
+    });
     
     it('returns for -2 + 2', function(done) {
         assert.ok(SyntaxExpression('-2 - 2'));

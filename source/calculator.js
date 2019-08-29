@@ -12,7 +12,6 @@ let SyntaxExpression = do |exp|
 
 var SyntaxExpression = require('./syntax-expression').SyntaxExpression;
 
-
 const MathFunction = {
     multiply: function(a, b) {
         return a * b;

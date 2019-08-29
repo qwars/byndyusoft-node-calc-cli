@@ -70,7 +70,6 @@ exports.SyntaxExpression = self.SyntaxExpression = function(exp) {
     if (exp.match(/[^0-9\.\-\+\*\/\)\(e\s]/) || exp.match(/\-{2}|\+{2}|\*{2}|\/{2}/) || exp.match(/[e\.]\s+/)) {
         return null
     };
-
     for (let i = 0, items = iter$(exp.trim().split("")), len = items.length, item; i < len; i++) {
         item = items[i];
         if (item.trim() === '') {
@@ -94,9 +93,6 @@ exports.SyntaxExpression = self.SyntaxExpression = function(exp) {
     };
 
     if (found.length > 0) {
-        if (parse.slice(-1)[0] == '[') {
-            parse.shift()
-        };
         if (Number(found.slice(-1)[0] == ']' || found.slice(-1)[0] == '0' || found.slice(-1)[0])) {
             parse.push(NumberFound(found.slice()))
         } else {
@@ -108,7 +104,7 @@ exports.SyntaxExpression = self.SyntaxExpression = function(exp) {
         return null
     } else {
         try {
-            return JSON.parse(RightSquareBracket(LeftSquareBracket(("[ " + parse.join('') + " ]"))));
+            return JSON.parse(RightSquareBracket(LeftSquareBracket(("[ " + parse.join('').replace(/\"\[/g, '", [') + " ]"))));
         } catch (err) {
             return null;
         };

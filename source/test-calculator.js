@@ -20,6 +20,17 @@ describe('Calculator Tests', function() {
         done();
     });
 
+    it('returns for -5+-7', function(done) {
+        assert.equal(Calculator.calculate('-5+(-7)'), -12 );
+        done();
+    });
+
+    
+    it('returns for -5+(-7)', function(done) {
+        assert.equal(Calculator.calculate('-5+(-7)'), -12 );
+        done();
+    });
+
     it('returns 2 * 2 = 4', function(done) {
         assert.equal(Calculator.calculate('2 * 2 '), 4);
         done();
@@ -31,8 +42,8 @@ describe('Calculator Tests', function() {
     });
 
     it('returns ( ( ( 2 / 2 ) + 2 - 2 * 2 ) + 1 ) / 2 = 0', function(done) {
-	assert.equal(Calculator.calculate('( ( ( 2 / 2 ) + 2 - 2 * 2 ) + 1 ) / 2'), 0);
-	done();
+        assert.equal(Calculator.calculate('( ( ( 2 / 2 ) + 2 - 2 * 2 ) + 1 ) / 2'), 0);
+        done();
     });
 
     it('returns ( 2 / 2 ) + 2 - 2 * 2 / 2 = 1', function(done) {
@@ -68,6 +79,5 @@ describe('Calculator Tests', function() {
     it('returns ( ( 2 / 2 ) + 2 + 5 * 10 ) = 53', function(done) {
         assert.equal( Calculator.calculate('( ( 2 / 2 ) + 2 + 5 * 10 )'), 53 );
         done();
-    });
-    
+    });    
 });

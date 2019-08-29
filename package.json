@@ -4,7 +4,7 @@
     "description": "Test task for byndyusoft.com",
     "main": "index.js",
     "scripts": {
-        "test": "yarn test:syntax && test:calculator",
+        "test": "yarn test:syntax && yarn test:calculator",
         "start": "node ./index.js",
         "test:syntax": "yarn code:syntax -o source/syntax-expression.js && mocha source/test-syntax.js",
         "test:calculator": "yarn code:calculator -o source/calculator.js && mocha source/test-calculator.js",

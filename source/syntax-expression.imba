@@ -58,7 +58,6 @@ export def SyntaxExpression exp
 	###
 	# Вот даже не знаю, или эту строку нужно по другому написать.
 	return null if exp.match( /[^0-9\.\-\+\*\/\)\(e\s]/ ) or exp.match(/\-{2}|\+{2}|\*{2}|\/{2}/) or exp.match /[e\.]\s+/
-
 	for item in exp.trim.split("") when item.trim !== ''
 		if item == ')' and found:length > 0 then found.push ']'
 		else if item == '(' then parse.push '['
@@ -69,13 +68,12 @@ export def SyntaxExpression exp
 		else return null
 
 	if found:length > 0
-		if parse.slice(-1)[0] == '[' then parse.shift
 		if Number found.slice(-1)[0] == ']' or found.slice(-1)[0] == '0' or found.slice(-1)[0] then parse.push NumberFound found.slice
 		else return null
 
 	unless parse:length > 0 then null
 	else
 		try
-			JSON.parse RightSquareBracket LeftSquareBracket "[ { parse.join '' } ]"
+			JSON.parse RightSquareBracket LeftSquareBracket "[ { parse.join('').replace(/\"\[/g, '", [') } ]"
 		catch err
 			null
