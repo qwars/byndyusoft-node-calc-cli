@@ -93,8 +93,10 @@ exports.SyntaxExpression = self.SyntaxExpression = function(exp) {
         };
     };
 
-
     if (found.length > 0) {
+        if (parse.slice(-1)[0] == '[') {
+            parse.shift()
+        };
         if (Number(found.slice(-1)[0] == ']' || found.slice(-1)[0] == '0' || found.slice(-1)[0])) {
             parse.push(NumberFound(found.slice()))
         } else {

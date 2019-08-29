@@ -68,8 +68,8 @@ export def SyntaxExpression exp
 		else if  Number item == '0' or item then found.push item
 		else return null
 
-
 	if found:length > 0
+		if parse.slice(-1)[0] == '[' then parse.shift
 		if Number found.slice(-1)[0] == ']' or found.slice(-1)[0] == '0' or found.slice(-1)[0] then parse.push NumberFound found.slice
 		else return null
 
