@@ -9,7 +9,7 @@ const NumberFound = function(found) {
 };
 
 const LeftSquareBracket = function(source) {
-    return source.replace(/\[\s*,\s*/g, '[');
+    return source.replace(/\[\s*,\s*/g, '[').replace(/\[\s*\+/g, '[');
 };
 
 const RightSquareBracket = function(source) {
@@ -67,10 +67,11 @@ exports.SyntaxExpression = self.SyntaxExpression = function(exp) {
     	*/
 
     // Вот даже не знаю, или эту строку нужно по другому написать.
-    if (exp.match(/[^0-9\.\-\+\*\/\)\(e\s]/) || exp.match(/\-{2}|\+{2}|\*{2}|\/{2}/) || exp.match(/[e\.]\s+/)) {
+    if (exp.match(/[^0-9\.\-\+\*\/\)\(e\s]/) || exp.match(/\*{2}|\/{2}/) || exp.match(/[e\.]\s+/)) {
         return null
     };
-    for (let i = 0, items = iter$(exp.trim().split("")), len = items.length, item; i < len; i++) {
+
+    for (let i = 0, items = iter$(exp.replace(/--|\+\+/g, '+').trim().split("")), len = items.length, item; i < len; i++) {
         item = items[i];
         if (item.trim() === '') {
             continue;

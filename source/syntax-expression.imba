@@ -3,7 +3,7 @@ const NumberFound = do |found=[]|
 	found:length > 0 and " , { found.join '' } , "
 
 const LeftSquareBracket = do |source|
-	source.replace /\[\s*,\s*/g, '['
+	source.replace( /\[\s*,\s*/g, '[' ).replace /\[\s*\+/g, '['
 
 const RightSquareBracket = do |source|
 	source.replace /\s*,\s*\]/g, ']'
@@ -57,8 +57,9 @@ export def SyntaxExpression exp
 
 	###
 	# Вот даже не знаю, или эту строку нужно по другому написать.
-	return null if exp.match( /[^0-9\.\-\+\*\/\)\(e\s]/ ) or exp.match(/\-{2}|\+{2}|\*{2}|\/{2}/) or exp.match /[e\.]\s+/
-	for item in exp.trim.split("") when item.trim !== ''
+	return null if exp.match( /[^0-9\.\-\+\*\/\)\(e\s]/ ) or exp.match(/\*{2}|\/{2}/) or exp.match /[e\.]\s+/
+
+	for item in exp.replace(/--|\+\+/g, '+').trim.split("") when item.trim !== ''
 		if item == ')' and found:length > 0 then found.push ']'
 		else if item == '(' then parse.push '['
 		else if ['+', '-' ].includes( item ) and Number found:length == 0 or found.slice(-1)[0] == 'e' then found.push item

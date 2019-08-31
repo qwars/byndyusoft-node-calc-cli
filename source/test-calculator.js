@@ -4,7 +4,23 @@ var assert = require( "assert" );
 var Calculator = ( fn => new  fn() )( require('./calculator.js').default );
 
 describe('Calculator Tests', function() {
+    
+    it('returns for error 2 ++1', function(done) {
+        assert.equal( Calculator.calculate('2 ++1'), 3 );
+        done();
+    });
 
+    it('returns for error 2--1', function(done) {
+        assert.equal( Calculator.calculate('2--1'), 3 );
+        done();
+    });
+
+    it('returns for error --1', function(done) {
+        assert.equal( Calculator.calculate('--1'), 1 );
+        done();
+    });    
+
+    
     it('returns 1 + 1 = 2', function(done) {
         assert.equal(Calculator.calculate('1 + 1'), 2);
         done();

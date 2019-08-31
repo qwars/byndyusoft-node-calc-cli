@@ -111,7 +111,7 @@ describe('Syntax expression Tests', function() {
     });
 
     it('returns for error 2 ++1', function(done) {
-        assert.ok( SyntaxExpression('2 ++1') === null );
+        assert.ok( SyntaxExpression('2 ++1') );
         done();
     });
 
@@ -121,12 +121,12 @@ describe('Syntax expression Tests', function() {
     });
 
     it('returns for error 2--1', function(done) {
-        assert.ok( SyntaxExpression('2--1') === null );
+        assert.ok( SyntaxExpression('2--1') );
         done();
     });
 
     it('returns for error --1', function(done) {
-        assert.ok( SyntaxExpression('2--1') === null );
+        assert.ok( SyntaxExpression('--1') );
         done();
     });    
 });
